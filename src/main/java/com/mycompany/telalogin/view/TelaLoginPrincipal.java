@@ -1,8 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.mycompany.telalogin.view;
+
+import com.mycompany.telalogin.dao.UsuarioDAO;
+import com.mycompany.telalogin.model.Usuario;
+import com.mycompany.telalogin.util.SessaoUsuario;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,21 +27,90 @@ public class TelaLoginPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        LblUsuario = new javax.swing.JLabel();
+        LblSenha = new javax.swing.JLabel();
+        TxtUsuario = new javax.swing.JTextField();
+        BtnEntrar = new javax.swing.JButton();
+        TxtSenha = new javax.swing.JPasswordField();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
+        jLabel1.setText("Faça o Login");
+
+        LblUsuario.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        LblUsuario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LblUsuario.setText("Usuário");
+
+        LblSenha.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        LblSenha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LblSenha.setText("Senha");
+
+        TxtUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TxtUsuarioActionPerformed(evt);
+            }
+        });
+
+        BtnEntrar.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        BtnEntrar.setText("Entrar");
+        BtnEntrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnEntrarActionPerformed(evt);
+            }
+        });
+
+        TxtSenha.setText("jPasswordField1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(308, 308, 308)
+                        .addComponent(BtnEntrar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(260, 260, 260)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(TxtUsuario)
+                            .addComponent(LblUsuario)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(LblSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TxtSenha))))
+                .addContainerGap(274, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(48, 48, 48)
+                .addComponent(LblUsuario)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TxtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(LblSenha)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TxtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(BtnEntrar)
+                .addContainerGap(191, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void TxtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TxtUsuarioActionPerformed
+
+    private void BtnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEntrarActionPerformed
+        realizarLogin();
+    }//GEN-LAST:event_BtnEntrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -77,6 +147,34 @@ public class TelaLoginPrincipal extends javax.swing.JFrame {
         });
     }
 
+    private void realizarLogin() {
+
+        String login = TxtUsuario.getText();
+        String senha = new String(TxtSenha.getPassword());
+        
+        UsuarioDAO dao = new UsuarioDAO();
+        Usuario usuario = dao.autenticarLogin(login, senha);
+        
+        if (usuario != null) {
+            
+            SessaoUsuario.login(usuario);
+            
+            MainMenu mainMenu = new MainMenu(this, true);
+            
+            mainMenu.setVisible(true);
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Usuario ou senha inválido");
+        }
+        
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnEntrar;
+    private javax.swing.JLabel LblSenha;
+    private javax.swing.JLabel LblUsuario;
+    private javax.swing.JPasswordField TxtSenha;
+    private javax.swing.JTextField TxtUsuario;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

@@ -28,6 +28,9 @@ public class Usuario {
     @Column(nullable = false)
     private String nome;
 
+    public Usuario() {
+    }
+
     public Usuario(int id, String login, String senha, String nome) {
         this.id = id;
         this.login = login;
