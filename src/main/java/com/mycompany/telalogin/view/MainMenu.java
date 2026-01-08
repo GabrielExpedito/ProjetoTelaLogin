@@ -1,8 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
 package com.mycompany.telalogin.view;
+
+import com.mycompany.telalogin.model.Usuario;
+import com.mycompany.telalogin.util.SessaoUsuario;
+import javax.swing.JLabel;
 
 /**
  *
@@ -13,9 +13,18 @@ public class MainMenu extends javax.swing.JDialog {
     /**
      * Creates new form MainMenu
      */
-    public MainMenu(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public MainMenu(java.awt.Window parent, boolean modal) {
+        super(parent, ModalityType.APPLICATION_MODAL);
         initComponents();
+
+        Usuario usuario = SessaoUsuario.getUsuarioLogado();
+        
+        if (usuario != null) {
+            lblUsuarioLogado.setText("Bem-vindo, " + usuario.getNome());
+        } else {
+            lblUsuarioLogado.setText("Usuário não identificado");
+        }
+        
     }
 
     /**
@@ -27,21 +36,73 @@ public class MainMenu extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenu1 = new javax.swing.JMenu();
+        lblUsuarioLogado = new javax.swing.JLabel();
+        btnSair = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        menuConfiguracoes = new javax.swing.JMenu();
+        menuItemCadastrarUsuario = new javax.swing.JMenuItem();
+
+        jMenu1.setText("jMenu1");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        btnSair.setText("Sair");
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairActionPerformed(evt);
+            }
+        });
+
+        menuConfiguracoes.setText("Configurações");
+
+        menuItemCadastrarUsuario.setText("Cadastrar Usuário");
+        menuItemCadastrarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemCadastrarUsuarioActionPerformed(evt);
+            }
+        });
+        menuConfiguracoes.add(menuItemCadastrarUsuario);
+
+        jMenuBar1.add(menuConfiguracoes);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnSair)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 635, Short.MAX_VALUE)
+                .addComponent(lblUsuarioLogado, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(457, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnSair)
+                    .addComponent(lblUsuarioLogado, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void menuItemCadastrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCadastrarUsuarioActionPerformed
+        CadastroUsuario cadastroUsuario = new CadastroUsuario(this, true);
+        
+        cadastroUsuario.setVisible(true);
+        
+    }//GEN-LAST:event_menuItemCadastrarUsuarioActionPerformed
+
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnSairActionPerformed
 
     /**
      * @param args the command line arguments
@@ -73,7 +134,7 @@ public class MainMenu extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                MainMenu dialog = new MainMenu(new javax.swing.JFrame(), true);
+                MainMenu dialog = new MainMenu(new javax.swing.JDialog(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -86,5 +147,11 @@ public class MainMenu extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSair;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JLabel lblUsuarioLogado;
+    private javax.swing.JMenu menuConfiguracoes;
+    private javax.swing.JMenuItem menuItemCadastrarUsuario;
     // End of variables declaration//GEN-END:variables
 }
